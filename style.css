@@ -19,7 +19,18 @@ body {
     padding: 0.15rem;
 }
 
+.col-sm-4 {
+    margin: 0px;
+    padding: 0.15rem;
+}
+
 .col-sm-12 {
     margin: 0px;
     padding: 0.15rem;
+}
+
+.unclickable-button {
+    pointer-events: none;
+    opacity: 1;
+    cursor: not-allowed;
 }

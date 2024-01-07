@@ -43,8 +43,10 @@
                     <button class="btn btn-primary" onclick="appendToResult('F')">F</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-primary" onclick="appendToResult('NOT')">NOT</button>
+                    <button class="btn btn-secondary" onclick="appendToResult('NOT')">NOT</button>
                 </div>
+                <div class="col-sm-1 d-grid"></div>
+                <div class="col-sm-4 d-grid"> <button class="btn btn-light unclickable-button"> Choose: </button></div>
             </div>
             <div class="row">
                 <div class="col-sm-1 d-grid">
@@ -63,10 +65,17 @@
                     <button class="btn btn-warning" onclick="appendToResult('%')">%</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-primary" onclick="appendToResult('AND')">AND</button>
+                    <button class="btn btn-secondary" onclick="appendToResult('AND')">AND</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-primary" onclick="appendToResult('OR')">OR</button>
+                    <button class="btn btn-secondary" onclick="appendToResult('OR')">OR</button>
+                </div>
+                <div class="col-sm-1 d-grid"></div>
+                <div class="col-sm-2 d-grid">
+                    <button class="btn btn-light" onclick="">DEC</button>
+                </div>
+                <div class="col-sm-2 d-grid">
+                    <button class="btn btn-light" onclick="">Aritmetika</button>
                 </div>
             </div>
             <div class="row">
@@ -86,10 +95,17 @@
                     <button class="btn btn-warning" onclick="appendToResult('^')">x^y</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-primary" onclick="appendToResult('NANd')">NAND</button>
+                    <button class="btn btn-secondary" onclick="appendToResult('NANd')">NAND</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-primary" onclick="appendToResult('NOR')">NOR</button>
+                    <button class="btn btn-secondary" onclick="appendToResult('NOR')">NOR</button>
+                </div>
+                <div class="col-sm-1 d-grid"></div>
+                <div class="col-sm-2 d-grid">
+                    <button class="btn btn-light" onclick="">BIN</button>
+                </div>
+                <div class="col-sm-2 d-grid">
+                    <button class="btn btn-light" onclick="">Pretvarjanje</button>
                 </div>
             </div>
             <div class="row">
@@ -109,10 +125,17 @@
                     <button class="btn btn-warning" onclick="appendToResult('sqrt&lpar; &rpar;')">sqrt&lpar;&rpar;</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-primary" onclick="appendToResult('XOR')">XOR</button>
+                    <button class="btn btn-secondary" onclick="appendToResult('XOR')">XOR</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-primary" onclick="appendToResult('XNOR')">XNOR</button>
+                    <button class="btn btn-secondary" onclick="appendToResult('XNOR')">XNOR</button>
+                </div>
+                <div class="col-sm-1 d-grid"></div>
+                <div class="col-sm-2 d-grid">
+                    <button class="btn btn-light" onclick="">OCT</button>
+                </div>
+                <div class="col-sm-2 d-grid">
+                    <button class="btn btn-light" onclick="">Logične operacije</button>
                 </div>
             </div>
             <div class="row">
@@ -129,10 +152,17 @@
                     <button class="btn btn-warning" onclick="appendToResult('/')">/</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-warning" onclick="appendToResult('*')">*</button>
+                    <button class="btn btn-success" onclick="clearResult()">C</button>
                 </div>
                 <div class="col-sm-2 d-grid">
                     <button class="btn btn-success" onclick="calculateResult()">=</button>
+                </div>
+                <div class="col-sm-1 d-grid"></div>
+                <div class="col-sm-2 d-grid">
+                    <button class="btn btn-light" onclick="">HEX</button>
+                </div>
+                <div class="col-sm-2 d-grid">
+                    <button class="btn btn-light unclickable-button"> :&rpar;</button>
                 </div>
             </div>
             
