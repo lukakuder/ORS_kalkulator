@@ -1,0 +1,14 @@
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+
+.btn {
+    width: 100%;
+    margin: 0px 5px;
+}
+
+.row {
+    margin-bottom: 5px;
+}
