@@ -34,3 +34,25 @@ body {
     opacity: 1;
     cursor: not-allowed;
 }
+
+.system {
+    background-color: orangered;
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+
+.operation,
+.operation:focus {
+    background-color: gray;
+    color: white;
+    box-shadow: none;
+}
+
+.system,
+.system:focus {
+    background-color: gray;
+    color: white;
+    box-shadow: none;
+}
