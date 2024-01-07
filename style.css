@@ -1,0 +1,58 @@
+body {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    margin: 50px;
+}
+
+.btn {
+    width: 100%;
+    padding: 5px;
+}
+
+.col-sm-1 {
+    margin: 0px;
+    padding: 0.15rem;
+}
+
+.col-sm-2 {
+    margin: 0px;
+    padding: 0.15rem;
+}
+
+.col-sm-4 {
+    margin: 0px;
+    padding: 0.15rem;
+}
+
+.col-sm-12 {
+    margin: 0px;
+    padding: 0.15rem;
+}
+
+.unclickable-button {
+    pointer-events: none;
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+.system {
+    background-color: orangered;
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+
+.operation,
+.operation:focus {
+    background-color: gray;
+    color: white;
+    box-shadow: none;
+}
+
+.system,
+.system:focus {
+    background-color: gray;
+    color: white;
+    box-shadow: none;
+}
