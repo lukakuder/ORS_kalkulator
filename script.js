@@ -9,11 +9,11 @@ function calculateResult() {
 
 
 
-    // try {
-    //     document.getElementById('result').value = eval(document.getElementById('result').value);
-    // } catch (error) {
-    //     document.getElementById('result').value = 'Error';
-    // }
+    try {
+         document.getElementById('result').value = eval(document.getElementById('result').value);
+    } catch (error) {
+         document.getElementById('result').value = 'Error';
+    }
 }
 
 function appendToInput(value) {
