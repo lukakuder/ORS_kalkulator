@@ -3,10 +3,11 @@ let config = {
     fromFile: false
 };
 
-
 function calculateResult() {
 
-    if (config.operation) {
+    if (checkForFile()) {
+        handleFile();
+    } else if (config.operation) {
         try {
             document.getElementById('result').value = eval(document.getElementById('result').value);
         } catch (error) {
@@ -35,3 +36,5 @@ function setOperation(clickedButton) {
     config.operation = clickedButton.textContent;
     clickedButton.classList.add('operation');
 }
+
+
