@@ -1,18 +1,20 @@
+let config = {
+    operation: "",
+    fromFile: false
+};
+
+
 function calculateResult() {
 
-    //Do validation if the system and operations are selected
-    var system = document.getElementsByClassName('system')[0].textContent;
-    console.log(system);
+    if (config.operation) {
+        try {
+            document.getElementById('result').value = eval(document.getElementById('result').value);
+        } catch (error) {
+            document.getElementById('result').value = 'Error';
+        }
 
-    var operation = document.getElementsByClassName('operation')[0].textContent;
-    console.log(operation);
-
-
-
-    try {
-         document.getElementById('result').value = eval(document.getElementById('result').value);
-    } catch (error) {
-         document.getElementById('result').value = 'Error';
+    } else {
+        alert("Prosim izberite želeno operacijo!");
     }
 }
 
@@ -25,19 +27,11 @@ function clearInput() {
 }
 
 function setOperation(clickedButton) {
-    var buttons = document.querySelectorAll('.btn');
+    var buttons = document.querySelectorAll('.btn-light');
     buttons.forEach(function(button) {
       button.classList.remove('operation');
     });
 
+    config.operation = clickedButton.textContent;
     clickedButton.classList.add('operation');
-}
-
-function setSystem(clickedButton) {
-    var buttons = document.querySelectorAll('.btn');
-    buttons.forEach(function(button) {
-      button.classList.remove('system');
-    });
-
-    clickedButton.classList.add('system');
 }
