@@ -9,6 +9,8 @@
         <link rel="stylesheet" href="style.css">
 
         <!-- JS import -->
+        <script src="scripts/calculations.js"></script>
+        <script src="scripts/input.js"></script>
         <script src="script.js"></script>
 
         <title> Kalkulator </title>
@@ -59,10 +61,10 @@
                     <button class="btn btn-primary" onclick="appendToInput('3')">3</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-warning" onclick="appendToInput('+')">+</button>
+                    <button class="btn btn-warning" onclick="appendToInput(' + ')">+</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-warning" onclick="appendToInput('%')">%</button>
+                    <button class="btn btn-warning" onclick="appendToInput(' % ')">%</button>
                 </div>
                 <div class="col-sm-1 d-grid">
                     <button class="btn btn-secondary" onclick="appendToInput('AND')">AND</button>
@@ -72,7 +74,7 @@
                 </div>
                 <div class="col-sm-1 d-grid"></div>
                 <div class="col-sm-2 d-grid">
-                    <button class="btn btn-light" onclick="setSystem(this)">DEC</button>
+                    <button class="btn btn-light" onclick="appendToInput('DEC')">DEC</button>
                 </div>
                 <div class="col-sm-2 d-grid">
                     <button class="btn btn-light" onclick="setOperation(this)">Aritmetika</button>
@@ -89,20 +91,20 @@
                     <button class="btn btn-primary" onclick="appendToInput('6')">6</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-warning" onclick="appendToInput('-')">-</button>
+                    <button class="btn btn-warning" onclick="appendToInput(' - ')">-</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-warning" onclick="appendToInput('^')">x^y</button>
+                    <button class="btn btn-warning" onclick="appendToInput(' ^ ')">x^y</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-secondary" onclick="appendToInput('NANd')">NAND</button>
+                    <button class="btn btn-secondary" onclick="appendToInput('NAND')">NAND</button>
                 </div>
                 <div class="col-sm-1 d-grid">
                     <button class="btn btn-secondary" onclick="appendToInput('NOR')">NOR</button>
                 </div>
                 <div class="col-sm-1 d-grid"></div>
                 <div class="col-sm-2 d-grid">
-                    <button class="btn btn-light" onclick="setSystem(this)">BIN</button>
+                    <button class="btn btn-light" onclick="appendToInput('BIN')">BIN</button>
                 </div>
                 <div class="col-sm-2 d-grid">
                     <button class="btn btn-light" onclick="setOperation(this)">Pretvarjanje</button>
@@ -119,7 +121,7 @@
                     <button class="btn btn-primary" onclick="appendToInput('9')">9</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-warning" onclick="appendToInput('*')">*</button>
+                    <button class="btn btn-warning" onclick="appendToInput(' * ')">*</button>
                 </div>
                 <div class="col-sm-1 d-grid">
                     <button class="btn btn-warning" onclick="appendToInput('sqrt&lpar; &rpar;')">sqrt&lpar;&rpar;</button>
@@ -132,7 +134,7 @@
                 </div>
                 <div class="col-sm-1 d-grid"></div>
                 <div class="col-sm-2 d-grid">
-                    <button class="btn btn-light" onclick="setSystem(this)">OCT</button>
+                    <button class="btn btn-light" onclick="appendToInput('OCT')">OCT</button>
                 </div>
                 <div class="col-sm-2 d-grid">
                     <button class="btn btn-light" onclick="setOperation(this)">Logične operacije</button>
@@ -149,7 +151,7 @@
                     <button class="btn btn-primary" onclick="appendToInput('&rpar;')">&rpar;</button>
                 </div>
                 <div class="col-sm-1 d-grid">
-                    <button class="btn btn-warning" onclick="appendToInput('/')">/</button>
+                    <button class="btn btn-warning" onclick="appendToInput(' / ')">/</button>
                 </div>
                 <div class="col-sm-1 d-grid">
                     <button class="btn btn-success" onclick="clearInput()">C</button>
@@ -159,13 +161,14 @@
                 </div>
                 <div class="col-sm-1 d-grid"></div>
                 <div class="col-sm-2 d-grid">
-                    <button class="btn btn-light" onclick="setSystem(this)">HEX</button>
+                    <button class="btn btn-light" onclick="appendToInput('HEX')">HEX</button>
                 </div>
                 <div class="col-sm-2 d-grid">
                     <button class="btn btn-light unclickable-button"> :&rpar;</button>
                 </div>
             </div>
-            
+
+            <input type="file" id="fileInput" />
             
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
