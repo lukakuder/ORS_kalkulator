@@ -56,3 +56,7 @@ body {
     color: white;
     box-shadow: none;
 }
+
+#fileOutput {
+    text-align: left;
+}
