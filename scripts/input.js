@@ -16,15 +16,21 @@ function checkForFile() {
 
 function handleFile() {
     let reader = new FileReader();
+    const output = document.getElementById('fileOutput');
 
     reader.readAsText(file);
 
     reader.onload = function() {
         let lines = reader.result.split('\n');
 
-        lines.forEach(function(line) {
-            let result = calculate(line);
-            console.log(line + " " + result);
+        lines.forEach(function(line, index) {
+            output.innerHTML += line + " " + calculate(line.slice(0, -2));
+
+            if (index < lines.length - 1) {
+                output.innerHTML += "<br>";
+            }
+
+            console.log(line + " " + calculate(line.slice(0, -2)));
         });
     };
 

@@ -9,7 +9,11 @@ function calculate(line) {
 }
 
 function calculateArithmetics(line) {
-    return eval(line);
+    try {
+        return eval(line);
+    } catch {
+        return "Error calculating"
+    }
 }
 
 //Tukaj daj ti svojo funkcijo, ki vrne samo rezultat
