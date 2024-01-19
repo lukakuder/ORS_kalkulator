@@ -1,6 +1,5 @@
 let config = {
-    operation: "",
-    fromFile: false
+    operation: ""
 };
 
 function calculateResult() {
@@ -9,7 +8,7 @@ function calculateResult() {
         handleFile();
     } else if (config.operation) {
         try {
-            document.getElementById('result').value = eval(document.getElementById('result').value);
+            document.getElementById('result').value = calculate(document.getElementById('result').value);
         } catch (error) {
             document.getElementById('result').value = 'Error';
         }

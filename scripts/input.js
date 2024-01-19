@@ -1,4 +1,4 @@
-let file = null;
+let file = undefined;
 
 function getFile() {
     file = document.getElementById('fileInput').files[0];
@@ -20,7 +20,12 @@ function handleFile() {
     reader.readAsText(file);
 
     reader.onload = function() {
-        console.log(reader.result);
+        let lines = reader.result.split('\n');
+
+        lines.forEach(function(line) {
+            let result = calculate(line);
+            console.log(line + " " + result);
+        });
     };
 
     reader.onerror = function() {
