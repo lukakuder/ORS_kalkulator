@@ -12,11 +12,10 @@ function calculateArithmetics(line) {
     try {
         return eval(line);
     } catch {
-        return "Error calculating"
+        return "Error calculating";
     }
 }
 
-//Tukaj daj ti svojo funkcijo, ki vrne samo rezultat
 function calculateConversion(line) {
     const decToBinRegex = /^DEC(\d+)BIN$/;
     const decToOctRegex = /^DEC(\d+)OCT$/;
@@ -27,10 +26,9 @@ function calculateConversion(line) {
     const octToDecRegex = /^OCT(\d+)DEC$/;
     const octToBinRegex = /^OCT(\d+)BIN$/;
     const octToHexRegex = /^OCT(\d+)HEX$/;
-    const hexToDecRegex = /^HEX(\w+)DEC$/; 
+    const hexToDecRegex = /^HEX(\w+)DEC$/;
     const hexToBinRegex = /^HEX(\w+)BIN$/;
     const hexToOctRegex = /^HEX(\w+)OCT$/;
-
 
     let match;
     let result;
@@ -67,20 +65,92 @@ function calculateConversion(line) {
 }
 
 function convertBase(input, fromBase, toBase, fromBaseName, toBaseName) {
-    const Number = parseInt(input, fromBase);
+    const digits = "0123456789ABCDEF";
+    const inputArray = input.toUpperCase().split("");
 
-    if (isNaN(Number)) {
-        return `Invalid input. Please enter a valid ${fromBaseName} number.`;
+    let decimalNumber = 0;
+    for (let i = 0; i < inputArray.length; i++) {
+        const digitValue = digits.indexOf(inputArray[i]);
+
+        if (digitValue === -1 || digitValue >= fromBase) {
+            return `Invalid input. Please enter a valid ${fromBaseName} number.`;
+        }
+
+        decimalNumber = decimalNumber * fromBase + digitValue;
     }
 
-    const result = Number.toString(toBase);
+    let result = customToString(decimalNumber, toBase);
 
     return result;
 }
 
+function customToString(number, base) {
+    if (number === 0) {
+        return '0';
+    }
 
+    let result = '';
+    while (number > 0) {
+        let remainder = number % base;
+        if (remainder >= 10 && base === 16) {
+            result = String.fromCharCode(87 + remainder) + result;
+        } else {
+            result = String(remainder) + result;
+        }
+        number = Math.floor(number / base);
+    }
 
-//Tukaj daj ti svojo funkcijo, ki vrne samo rezultat
+    return result;
+}
+
 function calculateLogic(line) {
-    return "To je logika"
+    const operatorRegex = /^(AND|OR|NOT|NAND|NOR|XOR)$/;
+    const tokens = line.match(/([01]+|AND|OR|NOT|NAND|NOR|XOR|[&|^~()])/g);
+
+    if (!tokens) {
+        return "Invalid expression.";
+    }
+
+    let result = parseInt(tokens[0], 2);
+
+    for (let i = 1; i < tokens.length; i += 2) {
+        const operator = tokens[i];
+        let nextToken = tokens[i + 1];
+
+        if (i % 2 === 1) {
+            if (!operatorRegex.test(operator)) {
+                return "Invalid expression. Unexpected operator.";
+            }
+        } else {
+            if (!/^[01]+$/.test(nextToken)) {
+                return "Invalid expression. Malformed binary number.";
+            }
+            nextToken = parseInt(nextToken, 2);
+        }
+
+        result = parseInt(customToString(result, 2), 2);
+
+        switch (operator) {
+            case 'AND':
+                result = result & parseInt(customToString(nextToken, 2), 2);
+                break;
+            case 'OR':
+                result = result | parseInt(customToString(nextToken, 2), 2);
+                break;
+            case 'NOT':
+                result = ~result & ((1 << customToString(nextToken, 2).length) - 1);
+                break;
+            case 'NAND':
+                result = (result & parseInt(customToString(nextToken, 2), 2)) ^ parseInt("1".repeat(customToString(nextToken, 2).length), 2);
+                break;
+            case 'NOR':
+                result = ~result & parseInt("1".repeat(customToString(nextToken, 2).length), 2);
+                break;
+            case 'XOR':
+                result = result ^ parseInt(customToString(nextToken, 2), 2);
+                break;
+        }
+    }
+
+    return customToString(result, 2);
 }
