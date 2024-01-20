@@ -115,6 +115,13 @@ function customToString(number, base) {
     }
 
     let result = '';
+    let isNegative = false;
+
+    if (number < 0) {
+        isNegative = true;
+        number = Math.abs(number);
+    }
+
     while (number > 0) {
         let remainder = number % base;
         if (remainder >= 10 && base === 16) {
@@ -123,6 +130,10 @@ function customToString(number, base) {
             result = String(remainder) + result;
         }
         number = Math.floor(number / base);
+    }
+
+    if (isNegative) {
+        result = '-' + result;
     }
 
     return result;
@@ -155,10 +166,10 @@ function calculateLogic(line) {
     const and = (a, b) => a & b;
     const or = (a, b) => a | b;
     const xor = (a, b) => a ^ b;
-    const nand = (a, b) => !(a & b);
-    const nor = (a, b) => !(a | b);
-    const xnor = (a, b) => !(a ^ b);
-    const not = (a) => !a;
+    const nand = (a, b) => ~(a & b);
+    const nor = (a, b) => ~(a | b);
+    const xnor = (a, b) => ~(a ^ b);
+    const not = (a) => ~a;
 
     const basePrefix = operations[0].substring(0, 3).toUpperCase();
     let base = 2;
@@ -198,16 +209,16 @@ function calculateLogic(line) {
             result = xor(result, operand);
             break;
         case 'NAND':
-            result = nand(result, operand);
+            result = not(and(result, operand));
             break;
         case 'NOR':
-            result = nor(result, operand);
+            result = not(or(result, operand));
             break;
         case 'XNOR':
-            result = xnor(result, operand);
+            result = not(xor(result, operand));
             break;
         case 'NOT':
-            result = not(result);
+            result = ~result;
             break;
         default:
             console.error(`Invalid operator: ${operator}`);
