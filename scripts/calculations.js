@@ -103,6 +103,16 @@ function customToString(number, base) {
     return result;
 }
 
+function customParseInt(str, base) {
+    const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  
+    return str.split('').reduce((result, char) => {
+      const charValue = digits.indexOf(char.toUpperCase());
+      return result * base + charValue;
+    }, 0);
+  }
+
+
 function calculateLogic(line) {
   const operations = line.split(/\s+/);
 
@@ -114,11 +124,32 @@ function calculateLogic(line) {
   const xnor = (a, b) => !(a ^ b);
   const not = (a) => !a;
 
-  let result = parseInt(operations[0], 2);
+  const basePrefix = operations[0].substring(0, 3).toUpperCase();
+  let base = 2;
 
-  for (let i = 1; i < operations.length; i += 2) {
+  switch (basePrefix) {
+    case 'BIN':
+      base = 2;
+      break;
+    case 'OCT':
+      base = 8;
+      break;
+    case 'DEC':
+      base = 10;
+      break;
+    case 'HEX':
+      base = 16;
+      break;
+    default:
+      console.error(`Invalid base prefix: ${basePrefix}`);
+      return NaN;
+  }
+
+  let result = customParseInt(operations[1], base);
+
+  for (let i = 2; i < operations.length; i += 2) {
     const operator = operations[i];
-    const operand = parseInt(operations[i + 1], 2);
+    const operand = customParseInt(operations[i + 1], base);
 
     switch (operator.toUpperCase()) {
       case 'AND':
@@ -147,6 +178,6 @@ function calculateLogic(line) {
         return NaN;
     }
   }
-  
-    return customToString(result,2);
-  }
+
+  return customToString(result, base);
+}
