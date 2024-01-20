@@ -10,7 +10,32 @@ function calculate(line) {
 
 function calculateArithmetics(line) {
     try {
-        return eval(line);
+        
+        console.log(line);
+        console.log(hasBrackets(line));
+
+        while(hasBrackets(line)) {
+
+            let brackets = findLastBracket(line);
+            let chunk = line.substring(brackets[0], brackets[1] + 1)
+            let result = customEval(chunk);
+            console.log(result);
+
+            line = line.replace(chunk, result)
+            console.log(line);
+            
+            console.log(line.includes('pow ' + result));
+            if(line.includes('pow ' + result)) {
+                line = line.replace('pow ' + result, result)
+            } else if (line.includes('sqrt ' + result)) {
+                line = line.replace('sqrt ' + result, Math.sqrt(result))
+            }
+
+
+            console.log(line);
+        }
+
+        return customEval(line);
     } catch {
         return "Error calculating";
     }
@@ -110,7 +135,7 @@ function customParseInt(str, base) {
       const charValue = digits.indexOf(char.toUpperCase());
       return result * base + charValue;
     }, 0);
-  }
+}
 
 
 function calculateLogic(line) {
@@ -180,4 +205,62 @@ function calculateLogic(line) {
   }
 
   return customToString(result, base);
+}
+
+function hasBrackets(line) {
+    const regex = /[()]/;
+    return regex.test(line);
+}
+
+function findLastBracket(line) {
+    let brackets = new Array(2);
+    const length = line.length;
+
+    for (let i = length - 1; i >= 0 ; i--) {
+        if (line[i] == '(') {
+            brackets[0] = i;
+
+            for(let j = i; j < length; j++) {
+                if (line[j] == ')') {
+                    brackets[1] = j;
+                    return brackets;
+                }
+            }
+        }
+    }
+
+    return 'Error!';
+}
+
+function customEval(line) {
+    if (line[0] == '(' && line[line.length - 1] == ')') {
+        line = line.substring(1, line.length - 1);
+    }
+
+    line = line.trim();
+
+    if (line.includes(',')) {
+        return calculatePow(line);
+    }
+    
+    console.log(line);
+
+    return eval(line);
+}
+
+function calculatePow(line) {
+    const num = line.split(',');
+
+    console.log(num);
+
+    num[0] = customEval(num[0]);
+    num[1] = customEval(num[1]);
+
+    let result = 1;
+
+    for (let i = 0; i < num[1]; i++) {
+        result *= num[0];
+    }
+
+    return result;
 }

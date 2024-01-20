@@ -17,6 +17,7 @@ function checkForFile() {
 function handleFile() {
     let reader = new FileReader();
     const output = document.getElementById('fileOutput');
+    output.innerHTML = '';
 
     reader.readAsText(file);
 
