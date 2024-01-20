@@ -25,13 +25,13 @@ function handleFile() {
         let lines = reader.result.split('\n');
 
         lines.forEach(function(line, index) {
-            output.innerHTML += line + " " + calculate(line.slice(0, -2));
+            output.innerHTML += line + " " + calculate(line.slice(0, -2).trim());
 
             if (index < lines.length - 1) {
                 output.innerHTML += "<br>";
             }
 
-            console.log(line + " " + calculate(line.slice(0, -2)));
+            console.log(line + " " + calculate(line.slice(0, -2).trim()));
         });
     };
 
