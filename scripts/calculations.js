@@ -139,72 +139,72 @@ function customParseInt(str, base) {
 
 
 function calculateLogic(line) {
-  const operations = line.split(/\s+/);
+    const operations = line.split(/\s+/);
 
-  const and = (a, b) => a & b;
-  const or = (a, b) => a | b;
-  const xor = (a, b) => a ^ b;
-  const nand = (a, b) => !(a & b);
-  const nor = (a, b) => !(a | b);
-  const xnor = (a, b) => !(a ^ b);
-  const not = (a) => !a;
+    const and = (a, b) => a & b;
+    const or = (a, b) => a | b;
+    const xor = (a, b) => a ^ b;
+    const nand = (a, b) => !(a & b);
+    const nor = (a, b) => !(a | b);
+    const xnor = (a, b) => !(a ^ b);
+    const not = (a) => !a;
 
-  const basePrefix = operations[0].substring(0, 3).toUpperCase();
-  let base = 2;
+    const basePrefix = operations[0].substring(0, 3).toUpperCase();
+    let base = 2;
 
-  switch (basePrefix) {
-    case 'BIN':
-      base = 2;
-      break;
-    case 'OCT':
-      base = 8;
-      break;
-    case 'DEC':
-      base = 10;
-      break;
-    case 'HEX':
-      base = 16;
-      break;
-    default:
-      console.error(`Invalid base prefix: ${basePrefix}`);
-      return NaN;
-  }
-
-  let result = customParseInt(operations[1], base);
-
-  for (let i = 2; i < operations.length; i += 2) {
-    const operator = operations[i];
-    const operand = customParseInt(operations[i + 1], base);
-
-    switch (operator.toUpperCase()) {
-      case 'AND':
-        result = and(result, operand);
+    switch (basePrefix) {
+        case 'BIN':
+        base = 2;
         break;
-      case 'OR':
-        result = or(result, operand);
+        case 'OCT':
+        base = 8;
         break;
-      case 'XOR':
-        result = xor(result, operand);
+        case 'DEC':
+        base = 10;
         break;
-      case 'NAND':
-        result = nand(result, operand);
+        case 'HEX':
+        base = 16;
         break;
-      case 'NOR':
-        result = nor(result, operand);
-        break;
-      case 'XNOR':
-        result = xnor(result, operand);
-        break;
-      case 'NOT':
-        result = not(result);
-        break;
-      default:
-        console.error(`Invalid operator: ${operator}`);
+        default:
+        console.error(`Invalid base prefix: ${basePrefix}`);
         return NaN;
     }
-  }
 
-  return customToString(result, base);
+    let result = customParseInt(operations[1], base);
+
+    for (let i = 2; i < operations.length; i += 2) {
+        const operator = operations[i];
+        const operand = customParseInt(operations[i + 1], base);
+
+        switch (operator.toUpperCase()) {
+        case 'AND':
+            result = and(result, operand);
+            break;
+        case 'OR':
+            result = or(result, operand);
+            break;
+        case 'XOR':
+            result = xor(result, operand);
+            break;
+        case 'NAND':
+            result = nand(result, operand);
+            break;
+        case 'NOR':
+            result = nor(result, operand);
+            break;
+        case 'XNOR':
+            result = xnor(result, operand);
+            break;
+        case 'NOT':
+            result = not(result);
+            break;
+        default:
+            console.error(`Invalid operator: ${operator}`);
+            return NaN;
+        }
+    }
+
+    return customToString(result, base);
 }
 
 function hasBrackets(line) {
@@ -245,7 +245,62 @@ function customEval(line) {
     
     console.log(line);
 
-    return eval(line);
+    const first = ['/' , '%' , '*'];
+    let arr = line.split(' ');
+    let newArr = new Array(arr.length);
+    newArr[0] = arr[0];
+    let offset = 0;
+    let result = 0;
+
+    for (let i = 1; i < arr.length - offset - 1; i += 2) {
+        for(let j = 0; j < 2; j++) {
+            newArr[i + j] = arr[i + j + offset]
+        }
+
+        console.log(newArr);
+
+        if(first.includes(newArr[i])) {
+            switch (newArr[i]) {
+                case '%':
+                    newArr[i - 1] = newArr[i - 1] % newArr[i + 1];
+                    break;
+                case '/':
+                    newArr[i - 1] = newArr[i - 1] / newArr[i + 1];
+                    break;
+                case '*':
+                    newArr[i - 1] = newArr[i - 1] * newArr[i + 1];
+                    break;
+                default:
+                    throw new Error('Invalid operator');
+            }
+
+            newArr[i] = newArr[i + 1] = null;
+            offset += 2;
+            i -= 2;
+        }
+
+        console.log(newArr);
+    }
+
+    newArr = newArr.filter(element => element !== undefined && element !== null);
+    console.log(newArr);
+
+    for (let i = 1; i < newArr.length - 1; i += 2) {
+        switch (newArr[i]) {
+            case '+':
+                newArr[0] = parseFloat(newArr[0]) + parseFloat(newArr[i + 1]);
+                break;
+            case '-':
+                newArr[0] = parseFloat(newArr[0]) - parseFloat(newArr[i + 1]);
+                break;
+            default:
+                throw new Error('Invalid operator');
+        }
+
+        console.log(newArr);
+    }
+
+    return newArr[0];
 }
 
 function calculatePow(line) {
