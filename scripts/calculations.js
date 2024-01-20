@@ -42,18 +42,18 @@ function calculateArithmetics(line) {
 }
 
 function calculateConversion(line) {
-    const decToBinRegex = /^DEC(\d+)BIN$/;
-    const decToOctRegex = /^DEC(\d+)OCT$/;
-    const decToHexRegex = /^DEC(\d+)HEX$/;
-    const binToDecRegex = /^BIN(\d+)DEC$/;
-    const binToOctRegex = /^BIN(\d+)OCT$/;
-    const binToHexRegex = /^BIN(\d+)HEX$/;
-    const octToDecRegex = /^OCT(\d+)DEC$/;
-    const octToBinRegex = /^OCT(\d+)BIN$/;
-    const octToHexRegex = /^OCT(\d+)HEX$/;
-    const hexToDecRegex = /^HEX(\w+)DEC$/;
-    const hexToBinRegex = /^HEX(\w+)BIN$/;
-    const hexToOctRegex = /^HEX(\w+)OCT$/;
+    const decToBinRegex = /^DEC\s*(\d+)\s*BIN$/;
+    const decToOctRegex = /^DEC\s*(\d+)\s*OCT$/;
+    const decToHexRegex = /^DEC\s*(\d+)\s*HEX$/;
+    const binToDecRegex = /^BIN\s*(\d+)\s*DEC$/;
+    const binToOctRegex = /^BIN\s*(\d+)\s*OCT$/;
+    const binToHexRegex = /^BIN\s*(\d+)\s*HEX$/;
+    const octToDecRegex = /^OCT\s*(\d+)\s*DEC$/;
+    const octToBinRegex = /^OCT\s*(\d+)\s*BIN$/;
+    const octToHexRegex = /^OCT\s*(\d+)\s*HEX$/;
+    const hexToDecRegex = /^HEX\s*(\w+)\s*DEC$/;
+    const hexToBinRegex = /^HEX\s*(\w+)\s*BIN$/;
+    const hexToOctRegex = /^HEX\s*(\w+)\s*OCT$/;
 
     let match;
     let result;
@@ -118,7 +118,7 @@ function customToString(number, base) {
     while (number > 0) {
         let remainder = number % base;
         if (remainder >= 10 && base === 16) {
-            result = String.fromCharCode(87 + remainder) + result;
+            result = String.fromCharCode(55 + remainder) + result;
         } else {
             result = String(remainder) + result;
         }
@@ -139,6 +139,16 @@ function customParseInt(str, base) {
 
 
 function calculateLogic(line) {
+  if (hasBrackets(line)) {
+    const brackets = findLastBracket(line);
+
+    const subExpression = line.substring(brackets[0] + 1, brackets[1]);
+    
+    const subResult = calculateLogic(subExpression);
+
+    line = line.substring(0, brackets[0]) + subResult + line.substring(brackets[1] + 1);
+  }
+
   const operations = line.split(/\s+/);
 
   const and = (a, b) => a & b;
