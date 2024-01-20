@@ -104,53 +104,49 @@ function customToString(number, base) {
 }
 
 function calculateLogic(line) {
-    const operatorRegex = /^(AND|OR|NOT|NAND|NOR|XOR)$/;
-    const tokens = line.match(/([01]+|AND|OR|NOT|NAND|NOR|XOR|[&|^~()])/g);
+  const operations = line.split(/\s+/);
 
-    if (!tokens) {
-        return "Invalid expression.";
+  const and = (a, b) => a & b;
+  const or = (a, b) => a | b;
+  const xor = (a, b) => a ^ b;
+  const nand = (a, b) => !(a & b);
+  const nor = (a, b) => !(a | b);
+  const xnor = (a, b) => !(a ^ b);
+  const not = (a) => !a;
+
+  let result = parseInt(operations[0], 2);
+
+  for (let i = 1; i < operations.length; i += 2) {
+    const operator = operations[i];
+    const operand = parseInt(operations[i + 1], 2);
+
+    switch (operator.toUpperCase()) {
+      case 'AND':
+        result = and(result, operand);
+        break;
+      case 'OR':
+        result = or(result, operand);
+        break;
+      case 'XOR':
+        result = xor(result, operand);
+        break;
+      case 'NAND':
+        result = nand(result, operand);
+        break;
+      case 'NOR':
+        result = nor(result, operand);
+        break;
+      case 'XNOR':
+        result = xnor(result, operand);
+        break;
+      case 'NOT':
+        result = not(result);
+        break;
+      default:
+        console.error(`Invalid operator: ${operator}`);
+        return NaN;
     }
-
-    let result = parseInt(tokens[0], 2);
-
-    for (let i = 1; i < tokens.length; i += 2) {
-        const operator = tokens[i];
-        let nextToken = tokens[i + 1];
-
-        if (i % 2 === 1) {
-            if (!operatorRegex.test(operator)) {
-                return "Invalid expression. Unexpected operator.";
-            }
-        } else {
-            if (!/^[01]+$/.test(nextToken)) {
-                return "Invalid expression. Malformed binary number.";
-            }
-            nextToken = parseInt(nextToken, 2);
-        }
-
-        result = parseInt(customToString(result, 2), 2);
-
-        switch (operator) {
-            case 'AND':
-                result = result & parseInt(customToString(nextToken, 2), 2);
-                break;
-            case 'OR':
-                result = result | parseInt(customToString(nextToken, 2), 2);
-                break;
-            case 'NOT':
-                result = ~result & ((1 << customToString(nextToken, 2).length) - 1);
-                break;
-            case 'NAND':
-                result = (result & parseInt(customToString(nextToken, 2), 2)) ^ parseInt("1".repeat(customToString(nextToken, 2).length), 2);
-                break;
-            case 'NOR':
-                result = ~result & parseInt("1".repeat(customToString(nextToken, 2).length), 2);
-                break;
-            case 'XOR':
-                result = result ^ parseInt(customToString(nextToken, 2), 2);
-                break;
-        }
-    }
-
-    return customToString(result, 2);
-}
+  }
+  
+    return customToString(result,2);
+  }
