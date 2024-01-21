@@ -189,58 +189,65 @@ function calculateLogic(line) {
 
     switch (basePrefix) {
         case 'BIN':
-        base = 2;
-        break;
+            base = 2;
+            break;
         case 'OCT':
-        base = 8;
-        break;
+            base = 8;
+            break;
         case 'DEC':
-        base = 10;
-        break;
+            base = 10;
+            break;
         case 'HEX':
-        base = 16;
-        break;
+            base = 16;
+            break;
         default:
-        console.error(`Invalid base prefix: ${basePrefix}`);
-        return NaN;
+            console.error(`Invalid base prefix: ${basePrefix}`);
+            return NaN;
     }
 
-    let result = customParseInt(operations[1], base);
+    let result;
+    let index;
 
-    for (let i = 2; i < operations.length; i += 2) {
+    if (operations[1].toUpperCase() === 'NOT') {
+        result = not(customParseInt(operations[2], base));
+        index=3;
+    } else {
+        result = customParseInt(operations[1], base);
+        index=2;
+    }
+
+    for (let i = index; i < operations.length; i += 2) {
         const operator = operations[i];
         const operand = customParseInt(operations[i + 1], base);
 
         switch (operator.toUpperCase()) {
-        case 'AND':
-            result = and(result, operand);
-            break;
-        case 'OR':
-            result = or(result, operand);
-            break;
-        case 'XOR':
-            result = xor(result, operand);
-            break;
-        case 'NAND':
-            result = not(and(result, operand));
-            break;
-        case 'NOR':
-            result = not(or(result, operand));
-            break;
-        case 'XNOR':
-            result = not(xor(result, operand));
-            break;
-        case 'NOT':
-            result = ~result;
-            break;
-        default:
-            console.error(`Invalid operator: ${operator}`);
-            return NaN;
+            case 'AND':
+                result = and(result, operand);
+                break;
+            case 'OR':
+                result = or(result, operand);
+                break;
+            case 'XOR':
+                result = xor(result, operand);
+                break;
+            case 'NAND':
+                result = not(and(result, operand));
+                break;
+            case 'NOR':
+                result = not(or(result, operand));
+                break;
+            case 'XNOR':
+                result = not(xor(result, operand));
+                break;
+            default:
+                console.error(`Invalid operator: ${operator}`);
+                return NaN;
         }
     }
 
     return customToString(result, base);
 }
+
 
 /**
  * Checks if the given strings has brackets
