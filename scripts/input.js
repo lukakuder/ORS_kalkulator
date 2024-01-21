@@ -1,9 +1,19 @@
 let file = undefined;
 
+/**
+ * Sets the global variable file to the file that the user has submitted
+ * 
+ * @returns {any}
+ */
 function getFile() {
     file = document.getElementById('fileInput').files[0];
 }
 
+/**
+ * Returns file depending on if the user has submitted a file
+ * 
+ * @returns {any}
+ */
 function checkForFile() {
     getFile();
 
@@ -14,6 +24,11 @@ function checkForFile() {
     return false;
 }
 
+/**
+ * Reads all the equasions in the file, calculates results and displays the results
+ * 
+ * @returns {any}
+ */
 function handleFile() {
     let reader = new FileReader();
     const output = document.getElementById('fileOutput');

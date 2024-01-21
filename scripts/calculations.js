@@ -1,3 +1,9 @@
+/**
+ * Executes the right calculation function
+ * 
+ * @param {any} line
+ * @returns {any}
+ */
 function calculate(line) {
     if (config.operation == "Aritmetika") {
         return calculateArithmetics(line);
@@ -8,6 +14,12 @@ function calculate(line) {
     }
 }
 
+/**
+ * Handels the arithmetics calculations
+ * 
+ * @param {any} line
+ * @returns {any}
+ */
 function calculateArithmetics(line) {
     try {
         while(hasBrackets(line)) {
@@ -31,6 +43,12 @@ function calculateArithmetics(line) {
     }
 }
 
+/**
+ * Handels the conversions
+ * 
+ * @param {any} line
+ * @returns {any}
+ */
 function calculateConversion(line) {
     const decToBinRegex = /^DEC\s*(\d+)\s*BIN$/;
     const decToOctRegex = /^DEC\s*(\d+)\s*OCT$/;
@@ -138,7 +156,12 @@ function customParseInt(str, base) {
     }, 0);
 }
 
-
+/**
+ * Handels the logic calculations
+ * 
+ * @param {any} line
+ * @returns {any}
+ */
 function calculateLogic(line) {
 
     if (hasBrackets(line)) {
@@ -219,11 +242,23 @@ function calculateLogic(line) {
     return customToString(result, base);
 }
 
+/**
+ * Checks if the given strings has brackets
+ * 
+ * @param {any} line
+ * @returns {any}
+ */
 function hasBrackets(line) {
     const regex = /[()]/;
     return regex.test(line);
 }
 
+/**
+ * Returns the indexes of the last pair of brackets
+ * 
+ * @param {any} line
+ * @returns {any}
+ */
 function findLastBracket(line) {
     let brackets = new Array(2);
     const length = line.length;
@@ -244,6 +279,12 @@ function findLastBracket(line) {
     return 'Error!';
 }
 
+/**
+ * Returns the value of an equasion that only contains *, /, %, +, -
+ * 
+ * @param {any} line
+ * @returns {any}
+ */
 function customEval(line) {
     if (line[0] == '(' && line[line.length - 1] == ')') {
         line = line.substring(1, line.length - 1);
@@ -305,6 +346,12 @@ function customEval(line) {
     return newArr[0];
 }
 
+/**
+ * Calculates the value of pow and returns the value
+ * 
+ * @param {any} line
+ * @returns {any}
+ */
 function calculatePow(line) {
     const num = line.split(',');
 
