@@ -10,29 +10,19 @@ function calculate(line) {
 
 function calculateArithmetics(line) {
     try {
-        
-        console.log(line);
-        console.log(hasBrackets(line));
-
         while(hasBrackets(line)) {
 
             let brackets = findLastBracket(line);
             let chunk = line.substring(brackets[0], brackets[1] + 1)
             let result = customEval(chunk);
-            console.log(result);
 
             line = line.replace(chunk, result)
-            console.log(line);
             
-            console.log(line.includes('pow ' + result));
             if(line.includes('pow ' + result)) {
                 line = line.replace('pow ' + result, result)
             } else if (line.includes('sqrt ' + result)) {
                 line = line.replace('sqrt ' + result, Math.sqrt(result))
             }
-
-
-            console.log(line);
         }
 
         return customEval(line);
@@ -253,22 +243,17 @@ function customEval(line) {
     if (line.includes(',')) {
         return calculatePow(line);
     }
-    
-    console.log(line);
 
     const first = ['/' , '%' , '*'];
     let arr = line.split(' ');
     let newArr = new Array(arr.length);
     newArr[0] = arr[0];
     let offset = 0;
-    let result = 0;
 
     for (let i = 1; i < arr.length - offset - 1; i += 2) {
         for(let j = 0; j < 2; j++) {
             newArr[i + j] = arr[i + j + offset]
         }
-
-        console.log(newArr);
 
         if(first.includes(newArr[i])) {
             switch (newArr[i]) {
@@ -289,12 +274,9 @@ function customEval(line) {
             offset += 2;
             i -= 2;
         }
-
-        console.log(newArr);
     }
 
     newArr = newArr.filter(element => element !== undefined && element !== null);
-    console.log(newArr);
 
     for (let i = 1; i < newArr.length - 1; i += 2) {
         switch (newArr[i]) {
@@ -307,8 +289,6 @@ function customEval(line) {
             default:
                 throw new Error('Invalid operator');
         }
-
-        console.log(newArr);
     }
 
     return newArr[0];
