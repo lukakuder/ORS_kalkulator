@@ -50,6 +50,7 @@ function calculateArithmetics(line) {
  * @returns {any}
  */
 function calculateConversion(line) {
+    // Regular expressions for various conversion patterns
     const decToBinRegex = /^DEC\s*(\d+)\s*BIN$/;
     const decToOctRegex = /^DEC\s*(\d+)\s*OCT$/;
     const decToHexRegex = /^DEC\s*(\d+)\s*HEX$/;
@@ -65,8 +66,9 @@ function calculateConversion(line) {
 
     let match;
     let result;
-
+        // Matching the input line with conversion patterns
     if ((match = line.match(decToBinRegex))) {
+        // If DEC to BIN conversion is matched, call convertBase with appropriate parameters
         result = convertBase(match[1], 10, 2, "decimal", "binary");
     } else if ((match = line.match(decToOctRegex))) {
         result = convertBase(match[1], 10, 8, "decimal", "octal");
@@ -91,32 +93,36 @@ function calculateConversion(line) {
     } else if ((match = line.match(hexToOctRegex))) {
         result = convertBase(match[1], 16, 8, "hexadecimal", "octal");
     } else {
+        // Handling invalid input format
         return "Invalid input format. Please use a supported format.";
     }
 
     return result;
 }
 
+// Helper function for base conversion
 function convertBase(input, fromBase, toBase, fromBaseName, toBaseName) {
     const digits = "0123456789ABCDEF";
     const inputArray = input.toUpperCase().split("");
 
     let decimalNumber = 0;
+
+    // Converting input to decimal
     for (let i = 0; i < inputArray.length; i++) {
         const digitValue = digits.indexOf(inputArray[i]);
-
+        // Handling invalid input digit
         if (digitValue === -1 || digitValue >= fromBase) {
             return `Invalid input. Please enter a valid ${fromBaseName} number.`;
         }
 
         decimalNumber = decimalNumber * fromBase + digitValue;
     }
-
+    // Converting decimal to target base and returning the result
     let result = customToString(decimalNumber, toBase);
 
     return result;
 }
-
+// Function to convert decimal number to a custom base
 function customToString(number, base) {
     if (number === 0) {
         return '0';
@@ -129,7 +135,7 @@ function customToString(number, base) {
         isNegative = true;
         number = Math.abs(number);
     }
-
+    // Converting decimal to the specified base
     while (number > 0) {
         let remainder = number % base;
         if (remainder >= 10 && base === 16) {
@@ -139,7 +145,7 @@ function customToString(number, base) {
         }
         number = Math.floor(number / base);
     }
-
+    // Adding negative sign if applicable
     if (isNegative) {
         result = '-' + result;
     }
@@ -147,9 +153,10 @@ function customToString(number, base) {
     return result;
 }
 
+// Function to parse a string in a custom base to decimal
 function customParseInt(str, base) {
     const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  
+    // Converting the string in the specified base to decimal
     return str.split('').reduce((result, char) => {
       const charValue = digits.indexOf(char.toUpperCase());
       return result * base + charValue;
@@ -163,19 +170,21 @@ function customParseInt(str, base) {
  * @returns {any}
  */
 function calculateLogic(line) {
-
+    // Check if the input line contains brackets
     if (hasBrackets(line)) {
+        // Find the last pair of brackets in the line
         const brackets = findLastBracket(line);
-
+        // Extract the subexpression within the brackets
         const subExpression = line.substring(brackets[0] + 1, brackets[1]);
-        
+        // Recursively calculate the logic for the subexpression
         const subResult = calculateLogic(subExpression);
-
+        // Replace the subexpression with its result in the original line
         line = line.substring(0, brackets[0]) + subResult + line.substring(brackets[1] + 1);
     }
-
+    // Split the line into individual logical operations
     const operations = line.split(/\s+/);
 
+    // Define logical operation functions
     const and = (a, b) => a & b;
     const or = (a, b) => a | b;
     const xor = (a, b) => a ^ b;
@@ -184,10 +193,12 @@ function calculateLogic(line) {
     const xnor = (a, b) => ~(a ^ b);
     const not = (a) => ~a;
 
+    // Identify the base for the logical operations
     const basePrefix = operations[0].substring(0, 3).toUpperCase();
     let base = 2;
 
     switch (basePrefix) {
+        // Set the base based on the prefix (BIN, OCT, DEC, HEX)
         case 'BIN':
             base = 2;
             break;
@@ -208,18 +219,21 @@ function calculateLogic(line) {
     let result;
     let index;
 
+    // Determine if the first operation is a NOT operation
     if (operations[1].toUpperCase() === 'NOT') {
         result = not(customParseInt(operations[2], base));
-        index=3;
+        index=3; // Skip NOT operation and its operand
     } else {
+        // Parse the first operand in the specified base
         result = customParseInt(operations[1], base);
-        index=2;
+        index=2; // Skip the first operand
     }
-
+    // Iterate through the remaining operations in pairs (operator, operand)
     for (let i = index; i < operations.length; i += 2) {
         const operator = operations[i];
         const operand = customParseInt(operations[i + 1], base);
 
+        // Apply the specified logical operation to the result and operand
         switch (operator.toUpperCase()) {
             case 'AND':
                 result = and(result, operand);
@@ -244,7 +258,7 @@ function calculateLogic(line) {
                 return NaN;
         }
     }
-
+    // Convert the final result to a string in the specified base and return
     return customToString(result, base);
 }
 
