@@ -57,5 +57,3 @@ function setOperation(clickedButton) {
     config.operation = clickedButton.textContent;
     clickedButton.classList.add('operation');
 }
-
-
